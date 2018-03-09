@@ -12,5 +12,6 @@ namespace Sandbox.Notes.Api.Infrastructure.DataAccess
 		}
 
 		public DbSet<Note> Notes { get; set; }
+		public DbSet<NoteList> NoteLists { get; set; }
 	}
 }

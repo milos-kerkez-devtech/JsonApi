@@ -14,6 +14,7 @@ namespace Sandbox.Notes.Api.Notes.JsonApi
             return notes
                 .ApplyKeywordFilters(s => s.Text, query.FindFilters("text"))
                 .ApplyKeywordFilters(s => s.Creator, query.FindFilters("creator"))
+                .ApplyKeywordFilters(s => s.NoteListId.ToString(), query.FindFilters("noteListId"))
                 .ApplyIsInRangeFilters(s => s.CreatedOn, query.FindFilters("createdOn"));
         }
 

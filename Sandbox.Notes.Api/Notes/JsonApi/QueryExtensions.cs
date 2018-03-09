@@ -105,5 +105,6 @@ namespace Sandbox.Notes.Api.Notes.JsonApi
                 ? source.OrderByDescending(fieldSelector)
                 : source.OrderBy(fieldSelector);
         }
+        
     }
 }

@@ -15,49 +15,50 @@ namespace Sandbox.Notes.Api
 {
     public class Startup
     {
-	    // Configuration settings
-		public Startup(IHostingEnvironment environment, IConfiguration configuration)
-	    {
-		    Environment = environment;
-		    Configuration = configuration;
-	    }
-
-	    public readonly IHostingEnvironment Environment;
-	    public readonly IConfiguration Configuration;
-
-	    // Service dependency injection configuration
-		public void ConfigureServices(IServiceCollection services)
+        // Configuration settings
+        public Startup(IHostingEnvironment environment, IConfiguration configuration)
         {
-	        services
-				.AddMvc(option =>
-		        {
-					
-			        option.Filters.Add(typeof(HttpGlobalExceptionFilter));
-				})
-				.AddControllersAsServices();
+            Environment = environment;
+            Configuration = configuration;
+        }
 
-	        services.AddDbContext<NotesDbContext>(options =>
-		        options.UseInMemoryDatabase("NotesDb")
-	        );
+        public readonly IHostingEnvironment Environment;
+        public readonly IConfiguration Configuration;
 
-			services.AddOptions();
-	        services.Configure<AppConfiguration>(Configuration.GetSection("AppConfiguration"));
+        // Service dependency injection configuration
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services
+                .AddMvc(option =>
+                {
 
-			// Application services
-			services.AddTransient<IReadNoteService, ReadNoteService>();
-	        services.AddTransient<ICreateNoteService, CreateNoteService>();
-	        services.AddTransient<IUpdateNoteService, UpdateNoteService>();
-	        services.AddTransient<IDeleteNoteService, DeleteNoteService>();
-		}
+                    option.Filters.Add(typeof(HttpGlobalExceptionFilter));
+                })
+                .AddControllersAsServices();
 
-		// Middleware configuration
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
-		{
-			app.UseMiddleware<CorrelationMiddleware>();
-			app.UseMvcWithDefaultRoute();
-			app.UseDeveloperExceptionPage();
-		    var context = serviceProvider.GetService<NotesDbContext>();
-		    AddTestData(context);
+            services.AddDbContext<NotesDbContext>(options =>
+                options.UseInMemoryDatabase("NotesDb")
+            );
+
+            services.AddOptions();
+            services.Configure<AppConfiguration>(Configuration.GetSection("AppConfiguration"));
+
+            // Application services
+            services.AddTransient<IReadNoteService, ReadNoteService>();
+            services.AddTransient<ICreateNoteService, CreateNoteService>();
+            services.AddTransient<IUpdateNoteService, UpdateNoteService>();
+            services.AddTransient<IDeleteNoteService, DeleteNoteService>();
+            services.AddTransient<IReadNoteListService, ReadNoteListService>();
+        }
+
+        // Middleware configuration
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        {
+            app.UseMiddleware<CorrelationMiddleware>();
+            app.UseMvcWithDefaultRoute();
+            app.UseDeveloperExceptionPage();
+            var context = serviceProvider.GetService<NotesDbContext>();
+            AddTestData(context);
         }
 
         private static void AddTestData(NotesDbContext context)
@@ -69,14 +70,16 @@ namespace Sandbox.Notes.Api
                         Id = 2,
                         Text = "Test Note 2",
                         CreatedOn = DateTime.Now.AddDays(-1),
-                        Creator = "milos.kerkez"
+                        Creator = "milos.kerkez",
+                        NoteListId = 1
                     },
                     new Note
                     {
                         Id = 1,
                         Text = "Test Note 1",
                         CreatedOn = DateTime.Now,
-                        Creator = "milos.kerkez"
+                        Creator = "milos.kerkez",
+                        NoteListId = 2
                     },
                     new Note
                     {
@@ -129,7 +132,22 @@ namespace Sandbox.Notes.Api
                     }
                 };
 
+            var noteLists = new List<NoteList>
+            {
+                new NoteList
+                {
+                    Id = 1,
+                    Name = "Home"
+                },
+                new NoteList
+                {
+                    Id = 2,
+                    Name = "Work"
+                }
+            };
+
             context.Notes.AddRange(testNotes);
+            context.NoteLists.AddRange(noteLists);
 
             context.SaveChanges();
         }

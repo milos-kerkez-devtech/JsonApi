@@ -8,14 +8,16 @@ using AppRiver.JsonApi;
 namespace Sandbox.Notes.Api.Notes.JsonApi
 {
     [DataContract]
-    public class NoteResource : NoteResource<NoteAttributes>
+    public class NoteListResource: NoteListResource<NoteListAttributes>
     {
     }
 
     [DataContract]
-    [JsonApiResource("notes")]
-    public class NoteResource<TAttributes> : JsonApiResource<TAttributes> where TAttributes : new()
+    [JsonApiResource("noteLists")]
+    public class NoteListResource<TAttributes> : JsonApiResource<TAttributes> where TAttributes : new()
     {
-
+        
     }
 }
+
+
