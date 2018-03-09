@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox.Notes.Api", "Sandbox.Notes.Api\Sandbox.Notes.Api.csproj", "{7E291814-5E1B-419A-970F-E3F89AF69DF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E291814-5E1B-419A-970F-E3F89AF69DF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E291814-5E1B-419A-970F-E3F89AF69DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E291814-5E1B-419A-970F-E3F89AF69DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E291814-5E1B-419A-970F-E3F89AF69DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FF56CF4B-C7E3-4654-BF2A-12FB3EC4CF67}
+	EndGlobalSection
+EndGlobal
