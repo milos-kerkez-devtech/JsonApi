@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AppRiver.JsonApi;
+using Sandbox.Notes.Api.Notes.JsonApi.Services;
 using Sandbox.Notes.Api.Notes.Resource;
 
-namespace Sandbox.Notes.Api.Notes.JsonApi
+namespace Sandbox.Notes.Api.Notes.JsonApi.Extensions
 {
     public static class NoteQueryExtensions
     {

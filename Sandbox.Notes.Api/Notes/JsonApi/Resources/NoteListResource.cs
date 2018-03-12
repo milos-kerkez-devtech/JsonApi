@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 using AppRiver.JsonApi;
+using Sandbox.Notes.Api.Notes.JsonApi.Attributes;
 
-namespace Sandbox.Notes.Api.Notes.JsonApi
+namespace Sandbox.Notes.Api.Notes.JsonApi.Resources
 {
     [DataContract]
     public class NoteListResource: NoteListResource<NoteListAttributes>

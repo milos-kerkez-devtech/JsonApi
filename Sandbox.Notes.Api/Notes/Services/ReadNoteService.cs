@@ -14,6 +14,7 @@ namespace Sandbox.Notes.Api.Notes.Services
     {
         IEnumerable<Note> Get();
         Task<Response<Note>> Get(int noteId);
+        int GetTotalNumberOfNotes();
     }
 
     public class ReadNoteService : IReadNoteService
@@ -46,6 +47,11 @@ namespace Sandbox.Notes.Api.Notes.Services
                 _logger.LogError($"Failed to get note by id: {noteId}", exception);
                 return ResponseFactory.Fail<Note>($"Failed to get note by id: {noteId}");
             }
+        }
+
+        public int GetTotalNumberOfNotes()
+        {
+            return _context.Notes.Count();
         }
     }
 }

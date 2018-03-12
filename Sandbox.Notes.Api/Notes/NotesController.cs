@@ -11,6 +11,11 @@ using Microsoft.Extensions.Options;
 using Sandbox.Notes.Api.Infrastructure.Configuration;
 using Sandbox.Notes.Api.Infrastructure.Validation;
 using Sandbox.Notes.Api.Notes.JsonApi;
+using Sandbox.Notes.Api.Notes.JsonApi.Extensions;
+using Sandbox.Notes.Api.Notes.JsonApi.Requests;
+using Sandbox.Notes.Api.Notes.JsonApi.Responses;
+using Sandbox.Notes.Api.Notes.JsonApi.Services;
+using Sandbox.Notes.Api.Notes.JsonApi.Utility;
 using Sandbox.Notes.Api.Notes.Resource;
 using Sandbox.Notes.Api.Notes.Services;
 
@@ -50,59 +55,27 @@ namespace Sandbox.Notes.Api.Notes
         public IActionResult Get(JsonApiQueryModel query)
         {
             _logger.LogDebug($"Getting notes from app: {_appOptions.Value.ApplicationName}");
-            var notes = _readNoteService.Get();
-            var notesList = notes
+
+            var filteredNotes = _readNoteService.Get()
                 .Filter(query, _noteMappingService)
-                .Sort(query, _noteMappingService)
-                .Paginate(query).ToList();
+                .Sort(query, _noteMappingService);
 
-            var noteResources = notesList.Select(_noteMappingService.MapEntityToResource).ToList();
+            var notes = filteredNotes.Paginate(query).ToList();
 
-            var baseQueryLink = "/api/notes?";
+            var noteResources = notes.Select(_noteMappingService.MapEntityToResource).ToList();
 
             var nextLink = "";
+            var lastLink = "";
             if (query.Page.Count > 0)
             {
-                if (query.Page.Count == notesList.Count)
-                {
-                    nextLink = new Uri(Request.GetDisplayUrl()).GetLeftPart(UriPartial.Authority) + baseQueryLink +
-                               "page[count]=" + query.Page.Count + "&page[first]=" +
-                               (query.Page.Count + query.Page.First);
-                    if (query.Filters.Any())
-                    {
-                        foreach (var filter in query.Filters)
-                        {
-                            foreach (var filterValue in filter.Values)
-                            {
-                                nextLink += "&filter[" + filter.Field + "]=" + filterValue;
-                            }
-                        }
-                    }
-                    if (query.Sorts.Any())
-                    {
-                        nextLink += "&sort=";
-                        foreach (var sort in query.Sorts)
-                        {
-                            nextLink += sort;
-                            if (!query.Sorts.Last().Equals(sort))
-                            {
-                                nextLink += ",";
-                            }
-                        }
-                    }
-                    if (query.Includes.Any())
-                    {
-                        nextLink += "&include=";
-                        foreach (var include in query.Includes)
-                        {
-                            nextLink += include;
-                            if (!query.Includes.Last().Equals(include))
-                            {
-                                nextLink += ",";
-                            }
-                        }
-                    }
-                }
+                const string baseQueryLink = "/api/notes?";
+
+                var totalNumberOfNotes = filteredNotes.Count();
+                var requestDisplayUrl = Request.GetDisplayUrl();
+
+                nextLink = JsonApiLinkUtility.BuildNextLink(query, totalNumberOfNotes, baseQueryLink, requestDisplayUrl);
+
+                lastLink = JsonApiLinkUtility.BuildLastLink(query, totalNumberOfNotes, baseQueryLink, requestDisplayUrl);
             }
 
             var response = new ListOfNotesResponse
@@ -110,14 +83,15 @@ namespace Sandbox.Notes.Api.Notes
                 Links = new JsonApiDocumentLinks
                 {
                     Self = Request.GetDisplayUrl(),
-                    Next = nextLink
+                    Next = nextLink,
+                    Last = lastLink
                 },
                 Data = noteResources
             };
 
             if (query.IsIncluded("noteList"))
             {
-                var noteListIds = notesList.Select(note => note.NoteListId)
+                var noteListIds = notes.Select(note => note.NoteListId)
                     .Distinct()
                     .ToList();
 
@@ -129,8 +103,8 @@ namespace Sandbox.Notes.Api.Notes
             }
 
             return Ok(response);
-
         }
+
 
         [HttpGet("{noteId}")]
         public async Task<IActionResult> Get(int noteId)

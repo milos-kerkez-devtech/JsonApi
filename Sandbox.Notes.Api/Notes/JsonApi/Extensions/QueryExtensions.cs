@@ -4,7 +4,7 @@ using System.Linq;
 using AppRiver.JsonApi;
 using AppRiver.JsonApi.Queries;
 
-namespace Sandbox.Notes.Api.Notes.JsonApi
+namespace Sandbox.Notes.Api.Notes.JsonApi.Extensions
 {
     public static class QueryExtensions
     {

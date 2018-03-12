@@ -1,8 +1,11 @@
 ﻿using System;
 using AppRiver.JsonApi;
+using Sandbox.Notes.Api.Notes.JsonApi.Attributes;
+using Sandbox.Notes.Api.Notes.JsonApi.Relationships;
+using Sandbox.Notes.Api.Notes.JsonApi.Resources;
 using Sandbox.Notes.Api.Notes.Resource;
 
-namespace Sandbox.Notes.Api.Notes.JsonApi
+namespace Sandbox.Notes.Api.Notes.JsonApi.Services
 {
     public class NoteMappingService
     {

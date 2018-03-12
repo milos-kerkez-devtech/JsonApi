@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Sandbox.Notes.Api.Notes.JsonApi
+namespace Sandbox.Notes.Api.Notes.JsonApi.Attributes
 {
     [DataContract]
     public class NoteAttributes
