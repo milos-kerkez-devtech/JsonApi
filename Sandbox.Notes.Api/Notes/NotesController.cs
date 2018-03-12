@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Sandbox.Notes.Api.Infrastructure.Configuration;
 using Sandbox.Notes.Api.Infrastructure.Validation;
-using Sandbox.Notes.Api.Notes.JsonApi;
 using Sandbox.Notes.Api.Notes.JsonApi.Extensions;
 using Sandbox.Notes.Api.Notes.JsonApi.Requests;
 using Sandbox.Notes.Api.Notes.JsonApi.Responses;
@@ -124,7 +123,7 @@ namespace Sandbox.Notes.Api.Notes
             _logger.LogDebug("Creating note");
 
             var newNoteResource = request.Data;
-            var resourceValidator = new JsonApiResourceValidator("notesa", true, false);
+            var resourceValidator = new JsonApiResourceValidator("notes", true, false);
             resourceValidator.ValidateResource(newNoteResource);
 
 

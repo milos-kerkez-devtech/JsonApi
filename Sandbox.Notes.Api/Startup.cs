@@ -87,7 +87,7 @@ namespace Sandbox.Notes.Api
                         Text = "Test Note 3",
                         CreatedOn = DateTime.Now.AddHours(-12),
                         Creator = "milos.kerkez",
-                        NoteListId = 0
+                        NoteListId = 1
                     },
                     new Note
                     {
@@ -95,7 +95,7 @@ namespace Sandbox.Notes.Api
                         Text = "Test Note4",
                         CreatedOn = DateTime.Now,
                         Creator = "milos.kerkez",
-                        NoteListId = 0
+                        NoteListId = 1
                     },
                     new Note
                     {
@@ -103,7 +103,7 @@ namespace Sandbox.Notes.Api
                         Text = "Test Note 5",
                         CreatedOn = DateTime.Now.AddDays(-2),
                         Creator = "milos.kerkez",
-                        NoteListId = 0
+                        NoteListId = 2
                     },
                     new Note
                     {
@@ -111,7 +111,7 @@ namespace Sandbox.Notes.Api
                         Text = "Test Note 6",
                         CreatedOn = DateTime.Now.AddDays(-7),
                         Creator = "aleksandar.borkovac",
-                        NoteListId = 0
+                        NoteListId = 1
                     },
                     new Note
                     {
@@ -119,7 +119,7 @@ namespace Sandbox.Notes.Api
                         Text = "Test Note 7",
                         CreatedOn = DateTime.Now.AddDays(-14),
                         Creator = "milos.kerkez",
-                        NoteListId = 0
+                        NoteListId = 1
                     },
                     new Note
                     {
@@ -127,7 +127,7 @@ namespace Sandbox.Notes.Api
                         Text = "Test Note 8",
                         CreatedOn = DateTime.Now.AddDays(21),
                         Creator = "aleksandar.borkovac",
-                        NoteListId = 0
+                        NoteListId = 2
                     },
                     new Note
                     {
@@ -135,7 +135,7 @@ namespace Sandbox.Notes.Api
                         Text = "Test Note 9",
                         CreatedOn = DateTime.Now.AddDays(-5),
                         Creator = "milos.kerkez",
-                        NoteListId = 0
+                        NoteListId = 2
                     }
                 };
 
