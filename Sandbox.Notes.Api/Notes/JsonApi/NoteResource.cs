@@ -16,6 +16,7 @@ namespace Sandbox.Notes.Api.Notes.JsonApi
     [JsonApiResource("notes")]
     public class NoteResource<TAttributes> : JsonApiResource<TAttributes> where TAttributes : new()
     {
-
+        [DataMember(Name = "relationships", EmitDefaultValue = false)]
+        public NoteRelationships Relationships { get; set; }
     }
 }

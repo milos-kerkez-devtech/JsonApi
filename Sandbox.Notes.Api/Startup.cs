@@ -67,7 +67,7 @@ namespace Sandbox.Notes.Api
                 {
                     new Note
                     {
-                        Id = 2,
+                        Id = 1002,
                         Text = "Test Note 2",
                         CreatedOn = DateTime.Now.AddDays(-1),
                         Creator = "milos.kerkez",
@@ -75,7 +75,7 @@ namespace Sandbox.Notes.Api
                     },
                     new Note
                     {
-                        Id = 1,
+                        Id = 1001,
                         Text = "Test Note 1",
                         CreatedOn = DateTime.Now,
                         Creator = "milos.kerkez",
@@ -83,52 +83,59 @@ namespace Sandbox.Notes.Api
                     },
                     new Note
                     {
-                        Id = 3,
+                        Id = 1003,
                         Text = "Test Note 3",
                         CreatedOn = DateTime.Now.AddHours(-12),
-                        Creator = "milos.kerkez"
+                        Creator = "milos.kerkez",
+                        NoteListId = 0
                     },
                     new Note
                     {
-                        Id = 4,
+                        Id = 1004,
                         Text = "Test Note4",
                         CreatedOn = DateTime.Now,
-                        Creator = "milos.kerkez"
+                        Creator = "milos.kerkez",
+                        NoteListId = 0
                     },
                     new Note
                     {
-                        Id = 5,
+                        Id = 1005,
                         Text = "Test Note 5",
                         CreatedOn = DateTime.Now.AddDays(-2),
-                        Creator = "milos.kerkez"
+                        Creator = "milos.kerkez",
+                        NoteListId = 0
                     },
                     new Note
                     {
-                        Id = 6,
+                        Id = 1006,
                         Text = "Test Note 6",
                         CreatedOn = DateTime.Now.AddDays(-7),
-                        Creator = "aleksandar.borkovac"
+                        Creator = "aleksandar.borkovac",
+                        NoteListId = 0
                     },
                     new Note
                     {
-                        Id = 7,
+                        Id = 1007,
                         Text = "Test Note 7",
                         CreatedOn = DateTime.Now.AddDays(-14),
-                        Creator = "milos.kerkez"
+                        Creator = "milos.kerkez",
+                        NoteListId = 0
                     },
                     new Note
                     {
-                        Id = 8,
+                        Id = 1008,
                         Text = "Test Note 8",
                         CreatedOn = DateTime.Now.AddDays(21),
-                        Creator = "aleksandar.borkovac"
+                        Creator = "aleksandar.borkovac",
+                        NoteListId = 0
                     },
                     new Note
                     {
-                        Id = 9,
+                        Id = 1009,
                         Text = "Test Note 9",
                         CreatedOn = DateTime.Now.AddDays(-5),
-                        Creator = "milos.kerkez"
+                        Creator = "milos.kerkez",
+                        NoteListId = 0
                     }
                 };
 

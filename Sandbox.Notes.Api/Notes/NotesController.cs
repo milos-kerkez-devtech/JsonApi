@@ -16,7 +16,7 @@ using Sandbox.Notes.Api.Notes.Services;
 
 namespace Sandbox.Notes.Api.Notes
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]"), JsonApiErrorHandling]
     public class NotesController : ControllerBase
     {
         private readonly IReadNoteService _readNoteService;
@@ -65,7 +65,9 @@ namespace Sandbox.Notes.Api.Notes
             {
                 if (query.Page.Count == notesList.Count)
                 {
-                    nextLink = new Uri(Request.GetDisplayUrl()).GetLeftPart(UriPartial.Authority) + baseQueryLink + "page[count]=" + query.Page.Count + "&page[first]=" + (query.Page.Count + query.Page.First);
+                    nextLink = new Uri(Request.GetDisplayUrl()).GetLeftPart(UriPartial.Authority) + baseQueryLink +
+                               "page[count]=" + query.Page.Count + "&page[first]=" +
+                               (query.Page.Count + query.Page.First);
                     if (query.Filters.Any())
                     {
                         foreach (var filter in query.Filters)
@@ -120,13 +122,14 @@ namespace Sandbox.Notes.Api.Notes
                     .ToList();
 
                 var noteListResources = noteListIds.Select(_readNoteListService.Get)
-                .Select(_noteListMappingService.MapEntityToResource)
-                .ToList();
+                    .Select(_noteListMappingService.MapEntityToResource)
+                    .ToList();
 
                 response.Included = new List<JsonApiResource>(noteListResources);
             }
 
             return Ok(response);
+
         }
 
         [HttpGet("{noteId}")]
@@ -141,14 +144,31 @@ namespace Sandbox.Notes.Api.Notes
         }
 
         [HttpPost, ValidateModelState]
-        public async Task<IActionResult> Post([FromBody] Note note)
+        [Produces(typeof(SingleNoteResponse))]
+        public async Task<IActionResult> Post([FromBody] NoteCreationRequest request)
         {
             _logger.LogDebug("Creating note");
-            var response = await _createNoteService.Create(note);
-            if (response.IsSuccess)
-                return Ok(response.Data);
-            else
-                return BadRequest();
+
+            var newNoteResource = request.Data;
+            var resourceValidator = new JsonApiResourceValidator("notesa", true, false);
+            resourceValidator.ValidateResource(newNoteResource);
+
+
+            var createdNote =
+                await _createNoteService.Create(_noteMappingService.MapResourceToEntity(newNoteResource));
+            var noteResource = _noteMappingService.MapEntityToResource(createdNote.Data);
+
+            var response = new SingleNoteResponse
+            {
+                Links = new JsonApiDocumentLinks
+                {
+                    Self = new Uri(Request.GetDisplayUrl()).GetLeftPart(UriPartial.Authority) + "/api/notes/" +
+                           createdNote.Data.Id
+                },
+                Data = noteResource
+            };
+
+            return Ok(response);
         }
 
         [HttpPut("{noteId}")]
@@ -163,6 +183,7 @@ namespace Sandbox.Notes.Api.Notes
         }
 
         [HttpDelete("{noteId}")]
+        [Produces(typeof(NoDataResponse))]
         public async Task<IActionResult> Delete(int noteId)
         {
             _logger.LogDebug($"Deleting notes by id: {noteId}");

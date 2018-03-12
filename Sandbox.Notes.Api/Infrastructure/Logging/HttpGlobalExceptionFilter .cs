@@ -18,19 +18,19 @@ namespace Sandbox.Notes.Api.Infrastructure.Logging
 
 		public void OnException(ExceptionContext context)
 		{
-			var exception = context.Exception as ValidationException;
-			if (exception != null)
-			{
-				var validationContext = exception;
-				context.Result = new BadRequestObjectResult(new ErrorResponse {Errors = validationContext.Errors});
-			}
-			else
-			{
-				context.HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
-			}
+			//var exception = context.Exception as ValidationException;
+			//if (exception != null)
+			//{
+			//	var validationContext = exception;
+			//	context.Result = new BadRequestObjectResult(new ErrorResponse {Errors = validationContext.Errors});
+			//}
+			//else
+			//{
+			//	context.HttpContext.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+			//}
 
-			_logger.LogError(context.Exception.Message, context.Exception);
-			context.ExceptionHandled = true;
+			//_logger.LogError(context.Exception.Message, context.Exception);
+			//context.ExceptionHandled = true;
 		}
 	}
 
